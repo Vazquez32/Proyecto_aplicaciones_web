@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hambre Cero</title>
+ <link rel="stylesheet" href="estilos/styles.css">
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="container">
+        <div class="header-image">
+            <img src="img/logopo.png" alt="Logo" onclick="window.location.href='index.html';">
+        </div>
+        
+        <h1>Hambre Cero</h1>
+        
+        <div class="puebla-stats">
+            <p>En el estado de Puebla diariamente se desperdician aproximadamente 1,500 toneladas de alimento y al mismo tiempo un millón ochocientos mil poblanos no tienen suficiente para comer.</p>
+            <img src="img/Puebla_state.png" alt="Estado de Puebla">
+
+        </div>
+        
+        <div class="subtitle">
+            Acerca de nosotros...
+        </div>
+        
+        <div class="content">
+            Nuestra aplicación web busca recopilar información clara para abordar la inseguridad alimentaria en comunidades vulnerables de Puebla, aliándonos con el ODS 2 "Hambre Cero". A través de un formulario interactivo, permitirá recabar datos sobre necesidades alimentarias y determinar con precisión los requerimientos de cada zona.
+        </div>
+        
+        <div class="content">
+            Con esta plataforma, esperamos:
+        </div>
+        
+        <div class="objectives">
+            <ol>
+                <li>Centralizar la información relevante para que actores clave (como gobiernos locales y ONGs) puedan tomar decisiones informadas.</li>
+                <li>Fortalecer la participación comunitaria al darles un espacio para expresar sus necesidades y retos alimentarios.</li>
+            </ol>
+        </div>
+        
+        <a href="cuestionario.html" class="button">Responde nuestro cuestionario</a>
+        <a href="resultados.html" class="button">Mira las estadisticas</a>
+    </div>
+
+    <div class="footer-banner">
+        <h2>Asociados</h2>
+        <div class="banner-images" id="bannerImages">
+            <img src="img/APT_logo_1.png" alt="apt" onclick="window.open('https://apt.org.mx/', '_blank')">
+            <img src="img/Simi_Ayudar es Vivir.png" alt="simi" onclick="window.open('https://ayudaresvivir.org/index.html', '_blank')">
+            <img src="img/BAMX_Puebla.png" alt="Bamx" onclick="window.open('https://bamx.org.mx/', '_blank')">
+            <img src="img/GFN_Logo_Teal.png" alt="GFN" onclick="window.open('https://www.foodbanking.org/', '_blank')"> 
+            <img src="img/APT_logo_1.png" alt="apt" onclick="window.open('https://apt.org.mx/', '_blank')">
+            <img src="img/Simi_Ayudar es Vivir.png" alt="simi" onclick="window.open('https://ayudaresvivir.org/index.html', '_blank')">
+            <img src="img/BAMX_Puebla.png" alt="Bamx" onclick="window.open('https://bamx.org.mx/', '_blank')">
+            <img src="img/GFN_Logo_Teal.png" alt="GFN" onclick="window.open('https://www.foodbanking.org/', '_blank')"> 
+            <img src="img/APT_logo_1.png" alt="apt" onclick="window.open('https://apt.org.mx/', '_blank')">
+            <img src="img/Simi_Ayudar es Vivir.png" alt="simi" onclick="window.open('https://ayudaresvivir.org/index.html', '_blank')">
+            <img src="img/BAMX_Puebla.png" alt="Bamx" onclick="window.open('https://bamx.org.mx/', '_blank')">
+            <img src="img/GFN_Logo_Teal.png" alt="GFN" onclick="window.open('https://www.foodbanking.org/', '_blank')"> 
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('.button').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('¡Gracias por tu interés! El cuestionario te llevará solo unos minutos.');
+            window.location.href = 'cuestionario.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Hambre Cero</title>
+    <link rel="stylesheet" href="estilos/resultado.css">
+    <style>
+        .recomendaciones-container {
+    margin: 40px 25px;
+    background: linear-gradient(to right, rgba(221, 166, 58, 0.05), rgba(221, 166, 58, 0.1));
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 5px solid #DDA63A;
+    box-shadow: 0 5px 15px rgba(221, 166, 58, 0.1);
+}
+
+.categoria-recomendaciones h3 {
+    color: #DDA63A;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.recomendacion {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+    padding-left: 20px;
+    position: relative;
+}
+
+.recomendacion::before {
+    content: "•";
+    color: #C5192D;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.numero-recomendacion {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.call-to-action {
+    margin-top: 30px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.call-to-action h3 {
+    color: #C5192D;
+    font-size: 20px;
+}
+
+.call-to-action p {
+    color: #333;
+    font-size: 16px;
+}
+
+.recomendacion {
+            margin: 30px 15px;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="container">
+        <div class="header-image">
+            <img src="img/logopo.png" alt="Logo Hambre Cero" onclick="window.location.href='index.html';">
+        </div>
+        
+        <h1>Resultados de las Encuestas</h1>
+        
+        <div class="subtitle">
+            Aquí puedes visualizar los datos recopilados sobre Hambre Cero.
+        </div>
+
+        <div id="loading" style="text-align: center;">
+            <img src="img/cargando.gif" alt="Cargando...">
+            <p>Cargando datos...</p>
+        </div>
+
+        <div id="error" style="color: red;"></div>
+
+        <div id="graficas" style="display: none;">
+            <canvas id="grafica1" width="400" height="200"></canvas>
+            <canvas id="grafica2" width="400" height="200" style="margin-top: 20px;"></canvas>
+            <canvas id="grafica3" width="200" height="100" style="margin-top: 20px;"></canvas>
+            <canvas id="grafica4" width="400" height="200" style="margin-top: 20px;"></canvas>
+        </div>
+
+        <div id="recomendaciones" style="margin-top: 30px;"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    
+    <script>
+    $(document).ready(function() {
+        function loadChartData() {
+            $('#loading').show();
+            $('#graficas').hide();
+            $('#error').empty();
+
+            $.ajax({
+                url: 'get-results.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log("Datos recibidos:", data);
+                    
+                    $('#loading').hide();
+                    $('#graficas').show();
+
+                    if (!data || typeof data !== 'object') {
+                        $('#error').html('No se recibieron datos válidos').show();
+                        return;
+                    }
+
+                    initCharts(data);
+                    showRecommendations(data);
+                },
+                error: function(xhr, status, error) {
+                    $('#loading').hide();
+                    console.error("Error en la solicitud AJAX:", status, error);
+                    console.error("Respuesta del servidor:", xhr.responseText);
+                    $('#error').html(`
+                        <strong>Error al cargar los datos:</strong> 
+                        ${xhr.responseText || error}
+                    `).show();
+                }
+            });
+        }
+
+        function initCharts(data) {
+            if (!data.regiones || !data.accesoCanasta || 
+                !data.consumoFuera || !data.tiposAlimentos || 
+                !data.consumoAlimentos) {
+                $('#error').html('Datos incompletos para generar gráficas').show();
+                return;
+            }
+
+            // Gráfica 1: Región vs. Acceso a la canasta básica
+            new Chart(document.getElementById('grafica1'), {
+    type: 'bar',
+    data: {
+        labels: data.regiones,
+        datasets: [{
+            label: 'Acceso a la canasta básica (%)',
+            data: data.accesoCanasta,
+            backgroundColor: 'rgba(221, 166, 58, 0.6)',
+            borderColor: 'rgba(221, 166, 58, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: { display: true, text: 'Acceso a la Canasta Básica por Región' }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+
+new Chart(document.getElementById('grafica3'), {
+    type: 'doughnut', // Tipo de gráfica
+    data: {
+        labels: ["Diariamente", "Semanalmente", "Ocasionalmente", "Nunca"],
+        datasets: [{
+            label: 'Frecuencia de Consumo (%)',
+            data: [30, 40, 20, 10], // Datos ficticios
+            backgroundColor: [
+                'rgba(197, 25, 45, 0.6)',  // Rojo
+                'rgba(40, 167, 69, 0.6)',  // Verde
+                'rgba(0, 123, 255, 0.6)',  // Azul
+                'rgba(221, 166, 58, 0.6)'  // Amarillo
+            ],
+            borderColor: [
+                'rgba(197, 25, 45, 1)',
+                'rgba(40, 167, 69, 1)',
+                'rgba(0, 123, 255, 1)',
+                'rgba(221, 166, 58, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: { 
+                display: true, 
+                text: 'Frecuencia de Consumo Fuera del Hogar' 
+            }
+        },
+        cutout: '40%' // Ajuste del agujero central
+    }
+});
+
+
+
+            // Gráficas  y 4: Tipos de alimentos
+            new Chart(document.getElementById('grafica2'), {
+    type: 'line', // Cambiado de 'bar' a 'line'
+    data: {
+        labels: data.tiposAlimentos,
+        datasets: [{
+            label: 'Frecuencia de Consumo (%)',
+            data: data.consumoAlimentos,
+            backgroundColor: 'rgba(40, 167, 69, 0.3)', // Color de fondo con mayor transparencia
+            borderColor: 'rgba(40, 167, 69, 1)', // Color del borde
+            borderWidth: 2, // Grosor de la línea
+            tension: 0.3 // Suavizar la curva de la línea
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: { display: true, text: 'Frecuencia de Consumo de Tipos de Alimentos' }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+new Chart(document.getElementById('grafica4'), {
+    type: 'pie',
+    data: {
+        labels: ["Comida Chatarra", "Comida Rápida", "Frutas y Verduras", "Alimentos de Origen Animal", "Embutidos", "Cereales"],
+        datasets: [{
+            label: 'Distribución de Tipos de Alimentos',
+            data: [15, 25, 30, 10, 5, 15], // Datos ficticios
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.6)', // Comida Chatarra (Rojo)
+                'rgba(54, 162, 235, 0.6)', // Comida Rápida (Azul)
+                'rgba(75, 192, 192, 0.6)', // Frutas y Verduras (Verde)
+                'rgba(255, 206, 86, 0.6)', // Alimentos de Origen Animal (Amarillo)
+                'rgba(153, 102, 255, 0.6)', // Embutidos (Morado)
+                'rgba(255, 159, 64, 0.6)'  // Cereales (Naranja)
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: { 
+                display: true, 
+                text: 'Distribución de Tipos de Alimentos' 
+            }
+        }
+    }
+});
+
+        }
+
+        function showRecommendations(data) {
+    const recomendacionesDiv = $('#recomendaciones');
+    recomendacionesDiv.empty();
+
+    // Predefined recommendations (This can be dynamic with the data provided)
+    const recommendationCategories = [
+        {
+            title: "Estrategias de Seguridad Alimentaria",
+            recommendations: [
+                "<b>Lava tus alimentos correctamente.</b> Asegúrate de lavar frutas, verduras y otros alimentos para evitar enfermedades. Usa agua limpia y, de ser posible, desinfectantes naturales.",
+                "<b>Compra local.</b> Adquiere alimentos frescos en mercados locales o de productores cercanos. Esto beneficia tu salud y apoya la economía local.",
+                "<b>Planifica tus comidas.</b> Prepara una lista para evitar compras excesivas o innecesarias, lo que reducirá el desperdicio de alimentos."
+            ]
+        },
+        {
+            title: "Apoyo a Pequeños Productores",
+            recommendations: [
+                "<b>Prefiere productos locales.</b> Apoyar a pequeños productores no solo garantiza productos más frescos, sino que también ayuda a fortalecer sus economías.",
+                "<b>Infórmate sobre ferias locales.</b> Participa en mercados o eventos comunitarios para conocer nuevos productos locales.",
+                "<b>Consume de manera responsable.</b> Escoge productos de temporada y cultivos sostenibles."
+            ]
+        },
+        {
+            title: "Intervenciones Nutricionales",
+            recommendations: [
+                "<b>Mantén una dieta equilibrada.</b> Asegúrate de incluir frutas, verduras, proteínas, cereales y grasas saludables en tus comidas diarias.",
+                "<b>Busca orientación.</b> Consulta a un nutricionista o investiga sobre cómo mejorar tus hábitos alimenticios para cuidar de tu salud.",
+                "<b>Modera los alimentos procesados.</b> Reduce el consumo de comida rápida y procesada; opta por opciones caseras siempre que sea posible."
+            ]
+        }
+    ];
+
+    // Create container for the recommendations
+    const recommendationsSection = $('<div class="recomendaciones-container"></div>');
+
+    // Loop through categories to add each to the recommendations section
+    recommendationCategories.forEach((category, index) => {
+        const categorySection = $(`
+            <div class="categoria-recomendaciones">
+                <h3>${category.title}</h3>
+            </div>
+        `);
+
+        // Loop through the recommendations for each category
+        category.recommendations.forEach((rec, recIndex) => {
+            categorySection.append(`
+                <div class="recomendacion">
+                    <span class="numero-recomendacion">${index + 1}.${recIndex + 1}</span>
+                    ${rec}
+                </div>
+            `);
+        });
+
+        recommendationsSection.append(categorySection);
+    });
+
+    // Add a call-to-action at the end
+    const callToAction = $(`
+        <div class="call-to-action">
+            <h3>¡Juntos Podemos Combatir el Hambre!</h3>
+            <p>Estas recomendaciones son pasos concretos para avanzar hacia nuestro objetivo de Hambre Cero. Cada acción cuenta.</p>
+        </div>
+    `);
+
+    // Append the recommendations and call-to-action to the main container
+    recomendacionesDiv.append(recommendationsSection);
+    recomendacionesDiv.append(callToAction);
+}
+
+
+        // Cargar datos al iniciar
+        loadChartData();
+    });
+    </script>
+</body>
+</html>

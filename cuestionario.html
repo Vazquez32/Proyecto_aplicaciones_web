@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario - Hambre Cero</title>
+    <link rel="stylesheet" href="estilos/cuestionario.css">
+    
+
+</head>
+<body>
+    <div class="background-pattern"></div>
+    <div class="container">
+        <div class="header-image">
+            <img src="img/logopo.png" alt="Logo Hambre Cero" onclick="window.location.href='index.html';">
+        </div>
+        
+        <h1>Cuestionario</h1>
+        
+        <div id="error-message" class="message error-message">
+            Ha ocurrido un error al enviar los datos. Por favor, intenta nuevamente.
+        </div>
+
+        <form id="survey-form">
+            <!-- Selección de Región -->
+            <div class="form-group">
+                <label for="region">Selecciona tu región:</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <select id="region" name="region" required>
+                        <option value="">Seleccione su región</option>
+                        <option value="Mixteca">Mixteca</option>
+                        <option value="Valle de Atlixco y Matamoros">Valle de Atlixco y Matamoros</option>
+                        <option value="Sierra Norte">Sierra Norte</option>
+                        <option value="Sierra Nororiental">Sierra Nororiental</option>
+                        <option value="Tehuacán y Sierra Negra">Tehuacán y Sierra Negra</option>
+                        <option value="Angelópolis">Angelópolis</option>
+                        <option value="Valle Serdán">Valle Serdán</option>
+                    </select>
+                    <a href="#" id="view-region-map" style="font-size: 0.9em; color: #007BFF; text-decoration: underline;">(Quiero ubicar mi región)</a>
+                </div>
+            </div>
+            
+            <!-- Modal -->
+            <div id="region-map-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 1000; max-width: 80%; padding: 20px;">
+                <img src="img/regiones.png" alt="Mapa de las regiones de Puebla" style="width: 100%; height: auto; border-radius: 10px;"  alt="Logo" >
+                <button id="close-modal" style="margin-top: 10px; padding: 10px 20px; background: #C5192D; color: white; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
+            </div>
+            
+            <!-- Overlay -->
+            <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+            
+            <script>
+                document.getElementById('view-region-map').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('region-map-modal').style.display = 'block';
+                    document.getElementById('overlay').style.display = 'block';
+                });
+            
+                document.getElementById('close-modal').addEventListener('click', function() {
+                    document.getElementById('region-map-modal').style.display = 'none';
+                    document.getElementById('overlay').style.display = 'none';
+                });
+            
+                document.getElementById('overlay').addEventListener('click', function() {
+                    document.getElementById('region-map-modal').style.display = 'none';
+                    document.getElementById('overlay').style.display = 'none';
+                });
+            </script>
+
+            <!-- Preguntas de Seguridad Alimenticia -->
+            <h2>Seguridad Alimenticia</h2>
+            <div class="form-group">
+                <label>¿Lavas los alimentos antes de ingerirlos o prepararlos?</label>
+                <select name="lavar_alimentos" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="siempre">Siempre</option>
+                    <option value="a_veces">A veces</option>
+                    <option value="nunca">Nunca</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>¿Dónde obtienes la mayoría de alimentos que consumes?</label>
+                <select name="origen_alimentos" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="mercado">Mercado</option>
+                    <option value="supermercado">Supermercado</option>
+                    <option value="tienda_local">Tienda local</option>
+                    <option value="huerta_propia">Huerta propia</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>¿Qué tan a menudo consume alimentos fuera de su hogar?</label>
+                <select name="consumo_fuera" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="diariamente">Diariamente</option>
+                    <option value="semanalmente">De 2 a 3 veces por semana</option>
+                    <option value="ocasionalmente">Ocasionalmente</option>
+                    <option value="nunca">Nunca</option>
+                </select>
+            </div>
+
+            <!-- Preguntas de Hambre Cero -->
+            <h2>Hambre Cero</h2>
+            <div class="form-group">
+                <label>¿Qué tan accesibles son los alimentos de la canasta básica en su región?</label>
+                <select name="acceso_canasta" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="muy_accesibles">Muy accesibles</option>
+                    <option value="poco_accesibles">Poco accesibles</option>
+                    <option value="no_accesibles">No accesibles</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>¿Donaría alimentos para ayudar a contribuir a la erradicación del hambre?</label>
+                <select name="donar_alimentos" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="si">Sí, tengo posibildiad de donar</option>
+                    <option value="quisiera">Quisiera hacerlo pero no tengo los suficientes recursos</option>
+                    <option value="no_interes">No es de mi interés</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>¿Qué cosa piensa que ayudaría a reducir el hambre en tu región?</label>
+                <select name="facil_acceso" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="bancos">Bancos de alimentos</option>
+                    <option value="comedor">Comedor comunitario</option>
+                    <option value="apoyos">Apoyos económicos</option>
+                    <option value="promover">Promover la agricultura local (producir nuestro propio alimento)</option>
+                </select>
+            </div>
+
+            <!-- Preguntas de Nutrición -->
+            <h2>Nutrición</h2>
+            <div class="form-group">
+                <label>¿Qué tan balanceada considera su alimentación?</label>
+                <select name="alimentacion_balanceada" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="muy_balanceada">Muy balanceada</option>
+                    <option value="poco_balanceada">Poco balanceada</option>
+                    <option value="no_balanceada">Nada balanceada</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>¿Qué tipo de alimentos consume con más frecuencia? (Seleccione todas las que correspondan):</label>
+                <div>
+                    <label><input type="checkbox" name="tipo_alimentos[]" value="frutas_verduras"> Frutas y verduras</label>
+                </div>
+                <div>
+                    <label><input type="checkbox" name="tipo_alimentos[]" value="alimentos_origen_animal"> Alimentos de origen animal</label>
+                </div>
+                <div>
+                    <label><input type="checkbox" name="tipo_alimentos[]" value="embutidos"> Embutidos</label>
+                </div>
+                <div>
+                    <label><input type="checkbox" name="tipo_alimentos[]" value="cereales"> Cereales</label>
+                </div>
+                <div>
+                    <label><input type="checkbox" name="tipo_alimentos[]" value="comida_chatarra"> Comida chatarra</label>
+                </div>
+                <div>
+                    <label><input type="checkbox" name="tipo_alimentos[]" value="comida_rapida"> Comida rápida</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>¿Recibe orientación sobre cómo llevar a cabo su alimentación?</label>
+                <select name="orientacion_alimentaria" required>
+                    <option value="">Seleccione una opción</option>
+                    <option value="Sí">Sí</option>
+                    <option value="Poco">Tengo un poco de conocimiento</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-button">Enviar datos</button>
+        </form>
+        
+        <a href="index.html" class="go-back">← Volver a inicio</a>
+    </div>
+
+    <script>
+      document.getElementById('survey-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const errorMessage = document.getElementById('error-message');
+    const submitButton = document.querySelector('.submit-button');
+    
+    errorMessage.style.display = 'none';
+    submitButton.disabled = true;
+    submitButton.textContent = 'Enviando...';
+    
+    const formData = new FormData(this);
+    
+    try {
+        const response = await fetch('submit-survey.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            window.location.href = 'agradecimiento.html';
+        } else {
+            errorMessage.textContent = result.message || 'Ha ocurrido un error al enviar los datos.';
+            errorMessage.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        errorMessage.style.display = 'block';
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Enviar datos';
+    }
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: 
+            linear-gradient(120deg, rgba(221, 166, 58, 0.1), rgba(197, 25, 45, 0.1)),
+            linear-gradient(60deg, #ffffff 0%, #f8f9fa 100%);
+        background-attachment: fixed;
+        position: relative;
+        overflow-x: hidden;
+        padding-bottom: 100px; /* Espacio reservado para el banner */
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(221, 166, 58, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(197, 25, 45, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .background-pattern {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            linear-gradient(30deg, #DDA63A 12%, transparent 12.5%, transparent 87%, #DDA63A 87.5%, #DDA63A),
+            linear-gradient(150deg, #DDA63A 12%, transparent 12.5%, transparent 87%, #DDA63A 87.5%, #DDA63A),
+            linear-gradient(30deg, #DDA63A 12%, transparent 12.5%, transparent 87%, #DDA63A 87.5%, #DDA63A),
+            linear-gradient(150deg, #DDA63A 12%, transparent 12.5%, transparent 87%, #DDA63A 87.5%, #DDA63A),
+            linear-gradient(60deg, rgba(221,166,58,0.1) 25%, transparent 25.5%, transparent 75%, rgba(221,166,58,0.1) 75%, rgba(221,166,58,0.1)),
+            linear-gradient(60deg, rgba(221,166,58,0.1) 25%, transparent 25.5%, transparent 75%, rgba(221,166,58,0.1) 75%, rgba(221,166,58,0.1));
+        background-size: 80px 140px;
+        background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+        opacity: 0.05;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        position: relative;
+        z-index: 1;
+        border: 1px solid rgba(221, 166, 58, 0.1);
+    }
+
+    .header-image {
+        width: 100%;
+        height: 250px;
+        position: relative;
+        margin-bottom: 30px;
+        overflow: hidden;
+        border-radius: 15px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,249,250,0.9));
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .header-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .puebla-stats {
+        background-color: rgba(197, 25, 45, 0.05);
+        border-left: 5px solid #C5192D;
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .puebla-stats p {
+        color: #333;
+        font-size: 1.1em;
+        line-height: 1.6;
+    }
+
+    .puebla-stats img {
+        width: 25%;
+        max-width: 25%;
+        height: auto;
+        object-fit: contain;
+        margin-top: 15px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2.8em;
+        margin-bottom: 20px;
+        color: #C5192D;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #DDA63A;
+        margin-bottom: 35px;
+        font-size: 1.3em;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .content {
+        text-align: justify;
+        line-height: 1.9;
+        margin-bottom: 35px;
+        color: #444;
+        padding: 0 25px;
+        font-size: 1.05em;
+    }
+
+    .objectives {
+        margin: 40px 25px;
+        background: linear-gradient(to right, rgba(221, 166, 58, 0.05), rgba(221, 166, 58, 0.1));
+        padding: 30px;
+        border-radius: 15px;
+        border-left: 5px solid #DDA63A;
+        box-shadow: 0 5px 15px rgba(221, 166, 58, 0.1);
+    }
+
+    .objectives ol {
+        margin-left: 25px;
+        line-height: 1.8;
+    }
+
+    .objectives li {
+        margin-bottom: 20px;
+        color: #333;
+        padding-left: 15px;
+        position: relative;
+    }
+
+    .objectives li::marker {
+        color: #C5192D;
+        font-weight: bold;
+    }
+
+    .button {
+        display: block;
+        width: fit-content;
+        margin: 40px auto;
+        padding: 18px 40px;
+        background: linear-gradient(135deg, #C5192D, #d4293d);
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.4s ease;
+        box-shadow: 0 5px 15px rgba(197, 25, 45, 0.2);
+        font-size: 1.1em;
+    }
+
+    .button:hover {
+        background: linear-gradient(135deg, #DDA63A, #e4b54c);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 20px rgba(221, 166, 58, 0.3);
+    }
+
+
+    .footer-banner {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: 
+        radial-gradient(circle at 20% 20%, rgba(221, 166, 58, 0.05) 100%, transparent 0%),
+        radial-gradient(circle at 80% 80%, rgba(197, 25, 45, 0.05) 0%, transparent 0%);
+        color: #fff;
+        text-align: center;
+        padding: 15px 0 10px;
+        z-index: 1000;
+        overflow: hidden;
+    }
+    .footer-banner h2 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        color: #DDA63A; /* Color para destacar el texto */
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .banner-images {
+        display: flex;
+        gap: 30px;
+        white-space: nowrap;
+        overflow: hidden; /* Asegura que el desplazamiento solo sea interno */
+        position: relative; /* Garantiza que la animación no mueva el contenedor */
+        animation: scrollBanner 20s linear infinite;
+    }
+
+    @keyframes scrollBanner {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+
+    .banner-images img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .banner-images img:hover {
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .footer-banner {
+            padding: 10px;
+        }
+
+        .footer-banner h2 {
+            font-size: 1em;
+        }
+
+        h1 {
+            font-size: 2.2em;
+        }
+
+        .header-image {
+            height: 200px;
+        }
+
+        .objectives {
+            margin: 30px 15px;
+            padding: 20px;
+        }
+
+        .footer-banner {
+            padding: 5px;
+        }
+
+        .banner-images {
+            gap: 10px;
+        }
+
+        .banner-images img {
+            width: 60px;
+            height: 60px;
+        }
+    }
